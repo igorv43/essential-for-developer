@@ -20,6 +20,12 @@ import {
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
+import { useEffect, useContext } from "react";
+import { MMFixPrice as fixMMOBJ, MMFixPriceModel } from "./Bussines/MMFixPrice";
+import {
+  MMFixPriceContextType,
+  context,
+} from "../src/Context/MMFixPriceContext";
 
 const initialRows: GridRowsProp = [
   {
@@ -64,9 +70,11 @@ function EditToolbar(props: EditToolbarProps) {
 
 export default function MarketList() {
   const [rows, setRows] = React.useState(initialRows);
+  // const [fixPrice, setFixPrice] = React.useState({} as MMFixPriceModel);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
+  const { fixObj, updatePrice } = useContext(context) as MMFixPriceContextType;
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
@@ -182,7 +190,9 @@ export default function MarketList() {
       },
     },
   ];
-
+  useEffect(() => {
+    updatePrice(fixMMOBJ.Calculate(rows));
+  }, [rows]);
   return (
     <Box
       sx={{
