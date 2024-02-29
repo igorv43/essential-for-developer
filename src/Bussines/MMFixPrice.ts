@@ -115,10 +115,15 @@ export class MMFixPrice {
     const sumVolume = list.reduce((accumulator, object) => {
       return accumulator + object.volume;
     }, 0);
-
+    console.log("sumPrice", sumPrice);
+    console.log("sumVolume", sumVolume);
     const USTC_CEX_Price = sumPrice / sumVolume;
+    console.log("USTC_CEX_Price", USTC_CEX_Price);
+    console.log("calc x", ((USTC_CEX_Price - MMfp) / MMfp).toFixed(3));
+
     if (Math.abs((USTC_CEX_Price - MMfp) / MMfp) <= 0.5) {
       price = MMfp * Math.exp((USTC_CEX_Price - MMfp) / (2 * MMfp));
+      console.log("exp", price);
     } else {
       price = USTC_CEX_Price * 0.965;
     }

@@ -55,26 +55,114 @@ const initialRows: GridRowsProp = [
   //   price: 0.01,
   //   volume: 40000000,
   // },
-  // Formula D
+  // // Formula D
+  // {
+  //   id: randomId(),
+  //   exchange: "Binance",
+  //   pair: "USTC/USDT",
+  //   price: 0.02701,
+  //   volume: 70000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Kucoin",
+  //   pair: "USTC/USDT",
+  //   price: 0.017,
+  //   volume: 20000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Mexc",
+  //   pair: "USTC/USDT",
+  //   price: 0.01,
+  //   volume: 40000000,
+  // },
+  // // Formula F
+  // {
+  //   id: randomId(),
+  //   exchange: "Binance",
+  //   pair: "USTC/USDT",
+  //   price: 0.0481,
+  //   volume: 70000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Kucoin",
+  //   pair: "USTC/USDT",
+  //   price: 0.0671,
+  //   volume: 20000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Mexc",
+  //   pair: "USTC/USDT",
+  //   price: 0.0189,
+  //   volume: 40000000,
+  // },
+  // // Formula C
+  // {
+  //   id: randomId(),
+  //   exchange: "Binance",
+  //   pair: "USTC/USDT",
+  //   price: 0.0281,
+  //   volume: 70000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Kucoin",
+  //   pair: "USTC/USDT",
+  //   price: 0.0271,
+  //   volume: 20000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Mexc",
+  //   pair: "USTC/USDT",
+  //   price: 0.029,
+  //   volume: 40000000,
+  // },
+  // // Formula B
+  // {
+  //   id: randomId(),
+  //   exchange: "Binance",
+  //   pair: "USTC/USDT",
+  //   price: 0.02727,
+  //   volume: 70000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Kucoin",
+  //   pair: "USTC/USDT",
+  //   price: 0.057,
+  //   volume: 20000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Mexc",
+  //   pair: "USTC/USDT",
+  //   price: 0.032,
+  //   volume: 40000000,
+  // },
+  // Formula A
   {
     id: randomId(),
     exchange: "Binance",
     pair: "USTC/USDT",
-    price: 0.02701,
+    price: 0.02727,
     volume: 70000000,
   },
   {
     id: randomId(),
     exchange: "Kucoin",
     pair: "USTC/USDT",
-    price: 0.017,
+    price: 0.02701,
     volume: 20000000,
   },
   {
     id: randomId(),
     exchange: "Mexc",
     pair: "USTC/USDT",
-    price: 0.01,
+    price: 0.02678,
     volume: 40000000,
   },
 ];
