@@ -6,6 +6,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import { NumericFormat, NumericFormatProps } from "react-number-format";
+import TextField from "@mui/material/TextField";
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -21,19 +23,36 @@ import {
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { useEffect, useContext } from "react";
-import { MMFixPrice as fixMMOBJ, MMFixPriceModel } from "./Bussines/MMFixPrice";
+import { MMFixPrice as fixMMOBJ, MarketCoinModel } from "./Bussines/MMFixPrice";
 import {
   MMFixPriceContextType,
   context,
 } from "../src/Context/MMFixPriceContext";
+import { Stack } from "@mui/material";
+// const marketCapitalization = 239800348; //$239,800,348 USD
+//     const totalSupply = 8969386191; //8,969,386,191 USTC
 
 const initialRows: GridRowsProp = [
   {
     id: randomId(),
     exchange: "Binance",
     pair: "USTC/USDT",
-    price: 0.02,
-    volume: 15788.55,
+    price: 0.012,
+    volume: 70000000,
+  },
+  {
+    id: randomId(),
+    exchange: "Kucoin",
+    pair: "USTC/USDT",
+    price: 0.017,
+    volume: 20000000,
+  },
+  {
+    id: randomId(),
+    exchange: "Mexc",
+    pair: "USTC/USDT",
+    price: 0.01,
+    volume: 40000000,
   },
 ];
 
@@ -67,7 +86,58 @@ function EditToolbar(props: EditToolbarProps) {
     </GridToolbarContainer>
   );
 }
+interface CustomProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
 
+const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
+  function NumericFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
+
+    return (
+      <NumericFormat
+        {...other}
+        getInputRef={ref}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        valueIsNumericString
+        prefix=""
+      />
+    );
+  }
+);
+const NumericFormatCustomPrefix = React.forwardRef<
+  NumericFormatProps,
+  CustomProps
+>(function NumericFormatCustom(props, ref) {
+  const { onChange, ...other } = props;
+
+  return (
+    <NumericFormat
+      {...other}
+      getInputRef={ref}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      thousandSeparator
+      valueIsNumericString
+      prefix="$"
+    />
+  );
+});
 export default function MarketList() {
   const [rows, setRows] = React.useState(initialRows);
   // const [fixPrice, setFixPrice] = React.useState({} as MMFixPriceModel);
@@ -190,13 +260,24 @@ export default function MarketList() {
       },
     },
   ];
+  const [valuesMarket, setValuesMarket] = React.useState<MarketCoinModel>({
+    marketCapitalization: 239800348,
+    totalSupply: 8869386191,
+  });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValuesMarket({
+      ...valuesMarket,
+      [event.target.name]: event.target.value,
+    });
+  };
   useEffect(() => {
-    updatePrice(fixMMOBJ.Calculate(rows));
-  }, [rows]);
+    updatePrice(fixMMOBJ.Calculate(rows, valuesMarket));
+  }, [rows, valuesMarket]);
+
   return (
     <Box
       sx={{
-        height: 500,
+        height: 700,
         width: "100%",
         "& .actions": {
           color: "text.secondary",
@@ -206,6 +287,31 @@ export default function MarketList() {
         },
       }}
     >
+      <Stack direction="row" spacing={2}>
+        <TextField
+          label="Supply"
+          value={valuesMarket.totalSupply}
+          onChange={handleChange}
+          name="totalSupply"
+          id="formatted-totalSupply-input"
+          InputProps={{
+            inputComponent: NumericFormatCustom as any,
+          }}
+          variant="standard"
+        />
+        <TextField
+          label="Market"
+          value={valuesMarket.marketCapitalization}
+          onChange={handleChange}
+          name="marketCapitalization"
+          id="formatted-marketCapitalization-input"
+          InputProps={{
+            inputComponent: NumericFormatCustomPrefix as any,
+          }}
+          variant="standard"
+        />
+      </Stack>
+      <br></br>
       <DataGrid
         rows={rows}
         columns={columns}

@@ -8,16 +8,20 @@ export interface FixMMLog {
   nome: string;
   valor: string;
 }
-
+export interface MarketCoinModel {
+  marketCapitalization: number;
+  totalSupply: number;
+}
 export class MMFixPrice {
-  static Calculate(list: GridRowsProp): MMFixPriceModel {
-    const marketCapitalization = 239800348; //$239,800,348 USD
-    const totalSupply = 8969386191; //8,969,386,191 USTC
+  static Calculate(
+    list: GridRowsProp,
+    market: MarketCoinModel
+  ): MMFixPriceModel {
     let MMPrice = 0;
 
     // https://medium.com/@cryto2711/a280bd4e94e6
     //case MM f.p =(Market Capitalization/ Total Supply)
-    const MMfp = marketCapitalization / totalSupply;
+    const MMfp = market.marketCapitalization / market.totalSupply;
     console.log("MMfp", MMfp);
     const A = this.FormulaA(list, MMfp);
     if (A > 0) {
@@ -58,7 +62,7 @@ export class MMFixPrice {
     const onePercent = MMfp * 0.01;
     for (let index = 0; index < list.length; index++) {
       const obj = list[index];
-      if (MMfp - onePercent <= obj.price && obj.price <= MMfp + onePercent) {
+      if (obj.price >= MMfp - onePercent && obj.price <= MMfp + onePercent) {
         success = true;
       } else {
         success = false;
@@ -80,7 +84,7 @@ export class MMFixPrice {
     const onePercent = MMfp * 0.01;
     for (let index = 0; index < list.length; index++) {
       const obj = list[index];
-      if (MMfp - onePercent <= obj.price && obj.price <= MMfp + onePercent) {
+      if (obj.price >= MMfp - onePercent && obj.price <= MMfp + onePercent) {
         success = true;
       } else {
         list_y.push(obj);
@@ -113,7 +117,7 @@ export class MMFixPrice {
     }, 0);
 
     const USTC_CEX_Price = sumPrice / sumVolume;
-    if ((USTC_CEX_Price - MMfp) / MMfp <= 0.5) {
+    if (Math.abs((USTC_CEX_Price - MMfp) / MMfp) <= 0.5) {
       price = MMfp - ((USTC_CEX_Price - MMfp) / 2 - MMfp);
     } else {
       price = USTC_CEX_Price * 0.965;
@@ -148,7 +152,7 @@ export class MMFixPrice {
     const onePercent = MMfp * 0.01;
     for (let index = 0; index < list.length; index++) {
       const obj = list[index];
-      if (MMfp - onePercent <= obj.price && obj.price <= MMfp + onePercent) {
+      if (obj.price >= MMfp - onePercent && obj.price <= MMfp + onePercent) {
         success = true;
       } else {
         list_y.push(obj);
@@ -184,10 +188,12 @@ export class MMFixPrice {
     console.log("sumVolume", sumVolume);
     const USTC_CEX_Price = sumPrice / sumVolume;
     console.log("USTC_CEX_Price", USTC_CEX_Price);
-    if ((USTC_CEX_Price - MMfp) / MMfp <= 0.5) {
-      price = MMfp - ((USTC_CEX_Price - MMfp) / 2 - MMfp);
-    } else {
+    console.log("calc x", (USTC_CEX_Price - MMfp) / MMfp);
+    if (Math.abs((USTC_CEX_Price - MMfp) / MMfp) > 0.5) {
+      console.log("achou", USTC_CEX_Price);
       price = USTC_CEX_Price * 1.035;
+    } else {
+      price = MMfp - ((USTC_CEX_Price - MMfp) / 2 - MMfp);
     }
     return price;
   }
