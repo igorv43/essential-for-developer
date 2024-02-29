@@ -118,7 +118,7 @@ export class MMFixPrice {
 
     const USTC_CEX_Price = sumPrice / sumVolume;
     if (Math.abs((USTC_CEX_Price - MMfp) / MMfp) <= 0.5) {
-      price = MMfp - ((USTC_CEX_Price - MMfp) / 2 - MMfp);
+      price = MMfp * Math.exp((USTC_CEX_Price - MMfp) / (2 * MMfp));
     } else {
       price = USTC_CEX_Price * 0.965;
     }
@@ -193,7 +193,8 @@ export class MMFixPrice {
       console.log("achou", USTC_CEX_Price);
       price = USTC_CEX_Price * 1.035;
     } else {
-      price = MMfp - ((USTC_CEX_Price - MMfp) / 2 - MMfp);
+      price = MMfp * Math.exp((USTC_CEX_Price - MMfp) / MMfp);
+      console.log("p1", (USTC_CEX_Price - MMfp) / MMfp);
     }
     return price;
   }

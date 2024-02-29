@@ -33,11 +33,34 @@ import { Stack } from "@mui/material";
 //     const totalSupply = 8969386191; //8,969,386,191 USTC
 
 const initialRows: GridRowsProp = [
+  // Formula E
+  // {
+  //   id: randomId(),
+  //   exchange: "Binance",
+  //   pair: "USTC/USDT",
+  //   price: 0.012,
+  //   volume: 70000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Kucoin",
+  //   pair: "USTC/USDT",
+  //   price: 0.017,
+  //   volume: 20000000,
+  // },
+  // {
+  //   id: randomId(),
+  //   exchange: "Mexc",
+  //   pair: "USTC/USDT",
+  //   price: 0.01,
+  //   volume: 40000000,
+  // },
+  // Formula D
   {
     id: randomId(),
     exchange: "Binance",
     pair: "USTC/USDT",
-    price: 0.012,
+    price: 0.02701,
     volume: 70000000,
   },
   {
