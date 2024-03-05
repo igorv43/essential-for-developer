@@ -18,9 +18,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
+
+import Formula from "./Formula";
+
 import MarketList from "./MarketList";
 import { MMFixPriceProvider } from "./Context/MMFixPriceContext";
 
@@ -182,7 +182,7 @@ export default function Home() {
                     <MarketList />
                   </Paper>
                 </Grid>
-                {/* Recent Deposits */}
+                {/* Recent Formula */}
                 <Grid item xs={12} md={4} lg={3}>
                   <Paper
                     sx={{
@@ -192,7 +192,7 @@ export default function Home() {
                       height: 240,
                     }}
                   >
-                    <Deposits />
+                    <Formula />
                   </Paper>
                 </Grid>
                 {/* Recent Orders */}

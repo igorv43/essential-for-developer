@@ -9,7 +9,7 @@ function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function Formula() {
   const { fixObj } = useContext(context) as MMFixPriceContextType;
   return (
     <React.Fragment>
