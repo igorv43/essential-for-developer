@@ -28,145 +28,208 @@ import {
   MMFixPriceContextType,
   context,
 } from "../src/Context/MMFixPriceContext";
-import { Stack } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+} from "@mui/material";
 // const marketCapitalization = 239800348; //$239,800,348 USD
 //     const totalSupply = 8969386191; //8,969,386,191 USTC
 
-const initialRows: GridRowsProp = [
-  // Formula E
-  // {
-  //   id: randomId(),
-  //   exchange: "Binance",
-  //   pair: "USTC/USDT",
-  //   price: 0.012,
-  //   volume: 70000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Kucoin",
-  //   pair: "USTC/USDT",
-  //   price: 0.017,
-  //   volume: 20000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Mexc",
-  //   pair: "USTC/USDT",
-  //   price: 0.01,
-  //   volume: 40000000,
-  // },
-  // // Formula D
-  // {
-  //   id: randomId(),
-  //   exchange: "Binance",
-  //   pair: "USTC/USDT",
-  //   price: 0.02701,
-  //   volume: 70000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Kucoin",
-  //   pair: "USTC/USDT",
-  //   price: 0.017,
-  //   volume: 20000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Mexc",
-  //   pair: "USTC/USDT",
-  //   price: 0.01,
-  //   volume: 40000000,
-  // },
-  // // Formula F
-  // {
-  //   id: randomId(),
-  //   exchange: "Binance",
-  //   pair: "USTC/USDT",
-  //   price: 0.0481,
-  //   volume: 70000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Kucoin",
-  //   pair: "USTC/USDT",
-  //   price: 0.0671,
-  //   volume: 20000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Mexc",
-  //   pair: "USTC/USDT",
-  //   price: 0.0189,
-  //   volume: 40000000,
-  // },
-  // // Formula C
-  // {
-  //   id: randomId(),
-  //   exchange: "Binance",
-  //   pair: "USTC/USDT",
-  //   price: 0.0281,
-  //   volume: 70000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Kucoin",
-  //   pair: "USTC/USDT",
-  //   price: 0.0271,
-  //   volume: 20000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Mexc",
-  //   pair: "USTC/USDT",
-  //   price: 0.029,
-  //   volume: 40000000,
-  // },
-  // // Formula B
-  // {
-  //   id: randomId(),
-  //   exchange: "Binance",
-  //   pair: "USTC/USDT",
-  //   price: 0.02727,
-  //   volume: 70000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Kucoin",
-  //   pair: "USTC/USDT",
-  //   price: 0.057,
-  //   volume: 20000000,
-  // },
-  // {
-  //   id: randomId(),
-  //   exchange: "Mexc",
-  //   pair: "USTC/USDT",
-  //   price: 0.032,
-  //   volume: 40000000,
-  // },
-  // Formula A
-  {
-    id: randomId(),
-    exchange: "Binance",
-    pair: "USTC/USDT",
-    price: 0.02727,
-    volume: 70000000,
-  },
-  {
-    id: randomId(),
-    exchange: "Kucoin",
-    pair: "USTC/USDT",
-    price: 0.02701,
-    volume: 20000000,
-  },
-  {
-    id: randomId(),
-    exchange: "Mexc",
-    pair: "USTC/USDT",
-    price: 0.02678,
-    volume: 40000000,
-  },
-];
+const selectFunctionRows = (values: string) => {
+  let data = {
+    marketCapitalization: 0,
+    totalSupply: 0,
+    data: [] as any,
+  } as any;
+  switch (values) {
+    case "A":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8869386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.02727,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.02701,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.02678,
+            volume: 40000000,
+          },
+        ],
+      };
+      break;
+    case "B":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8869386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.02727,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.057,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.032,
+            volume: 40000000,
+          },
+        ],
+      };
 
+      break;
+    case "C":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8969386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.0281,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.0271,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.029,
+            volume: 40000000,
+          },
+        ],
+      };
+      break;
+    case "D":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8869386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.02701,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.017,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.01,
+            volume: 40000000,
+          },
+        ],
+      };
+      break;
+    case "E":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8869386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.012,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.017,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.01,
+            volume: 40000000,
+          },
+        ],
+      };
+      break;
+    case "F":
+      data = {
+        marketCapitalization: 239800348,
+        totalSupply: 8869386191,
+        data: [
+          {
+            id: randomId(),
+            exchange: "Binance",
+            pair: "USTC/USDT",
+            price: 0.0481,
+            volume: 70000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Kucoin",
+            pair: "USTC/USDT",
+            price: 0.0671,
+            volume: 20000000,
+          },
+          {
+            id: randomId(),
+            exchange: "Mexc",
+            pair: "USTC/USDT",
+            price: 0.0189,
+            volume: 40000000,
+          },
+        ],
+      };
+      break;
+    case "coingecko":
+      break;
+    default:
+    // code block
+  }
+
+  return data;
+};
+const initialRows: GridRowsProp = selectFunctionRows("A").data as GridRowsProp;
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   setRowModesModel: (
@@ -371,15 +434,27 @@ export default function MarketList() {
       },
     },
   ];
+  const obj = selectFunctionRows("A");
   const [valuesMarket, setValuesMarket] = React.useState<MarketCoinModel>({
-    marketCapitalization: 239800348,
-    totalSupply: 8869386191,
+    marketCapitalization: obj.marketCapitalization,
+    totalSupply: obj.totalSupply,
   });
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValuesMarket({
       ...valuesMarket,
       [event.target.name]: event.target.value,
     });
+  };
+  const [selectFunction, setSelectFunction] = React.useState("A");
+
+  const SelectFunctionHandleChange = (event: SelectChangeEvent) => {
+    setSelectFunction(event.target.value);
+    const obj = selectFunctionRows(event.target.value);
+    setValuesMarket({
+      marketCapitalization: obj.marketCapitalization,
+      totalSupply: obj.totalSupply,
+    });
+    setRows(obj.data);
   };
   useEffect(() => {
     updatePrice(fixMMOBJ.Calculate(rows, valuesMarket));
@@ -399,6 +474,29 @@ export default function MarketList() {
       }}
     >
       <Stack direction="row" spacing={2}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+          <InputLabel id="pre-determined-values-label">
+            Pre-determined values
+          </InputLabel>
+          <Select
+            labelId="pre-determined-values-label"
+            id="pre-determined-values"
+            value={selectFunction}
+            onChange={SelectFunctionHandleChange}
+            label="Function A"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={"A"}>Function A</MenuItem>
+            <MenuItem value={"B"}>Function B</MenuItem>
+            <MenuItem value={"C"}>Function C</MenuItem>
+            <MenuItem value={"D"}>Function D</MenuItem>
+            <MenuItem value={"E"}>Function E</MenuItem>
+            <MenuItem value={"F"}>Function F</MenuItem>
+            <MenuItem value={"coingecko"}>Coingecko</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           label="Supply"
           value={valuesMarket.totalSupply}

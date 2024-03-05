@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import ProTip from "./ProTip";
-import Dashboard from "./Dashboard";
+
 import Home from "./Home";
 
 function Copyright() {
