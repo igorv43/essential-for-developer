@@ -79,7 +79,6 @@ export class MMFixPrice {
     let success_y = false;
     let price: number = 0;
     let list_y = new Array();
-    // verifica se todos os preçoes seguem a logica
 
     const onePercent = MMfp * 0.01;
     for (let index = 0; index < list.length; index++) {
