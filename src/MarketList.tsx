@@ -38,8 +38,8 @@ import {
 } from "@mui/material";
 // const marketCapitalization = 239800348; //$239,800,348 USD
 //     const totalSupply = 8969386191; //8,969,386,191 USTC
-
-const selectFunctionRows = (values: string) => {
+//https://api.coingecko.com/api/v3/coins/bitcoin
+const selectFunctionRows = async (values: string) => {
   let data = {
     marketCapitalization: 0,
     totalSupply: 0,
@@ -222,6 +222,7 @@ const selectFunctionRows = (values: string) => {
       };
       break;
     case "coingecko":
+      data = await Coingecko();
       break;
     default:
     // code block
@@ -229,7 +230,33 @@ const selectFunctionRows = (values: string) => {
 
   return data;
 };
-const initialRows: GridRowsProp = selectFunctionRows("A").data as GridRowsProp;
+const Coingecko = async (): Promise<any> => {
+  const response: Response = await fetch(
+    `https://api.coingecko.com/api/v3/coins/terrausd`
+  ).then((res) => res.json());
+
+  const marketObj = response as any;
+  let arrayMarket = [] as any;
+
+  marketObj?.tickers.map((i: any) =>
+    arrayMarket.push({
+      id: randomId(),
+      exchange: i.market.name,
+      pair: i.base + "/" + i.target,
+      price: i.converted_last.usd,
+      volume: i.converted_volume.usd,
+    })
+  );
+
+  const obj = {
+    marketCapitalization: marketObj.market_data.market_cap.usd,
+    totalSupply: marketObj.market_data.total_supply,
+    data: arrayMarket,
+  };
+
+  return obj;
+};
+//const initialRows: GridRowsProp = selectFunctionRows("A").data as GridRowsProp;
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   setRowModesModel: (
@@ -312,9 +339,10 @@ const NumericFormatCustomPrefix = React.forwardRef<
     />
   );
 });
+
 export default function MarketList() {
-  const [rows, setRows] = React.useState(initialRows);
-  // const [fixPrice, setFixPrice] = React.useState({} as MMFixPriceModel);
+  const [rows, setRows] = React.useState([] as GridRowsProp);
+
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
@@ -369,7 +397,7 @@ export default function MarketList() {
       field: "pair",
       headerName: "Pair",
 
-      width: 100,
+      width: 400,
 
       editable: true,
     },
@@ -377,7 +405,7 @@ export default function MarketList() {
       field: "price",
       headerName: "Price",
       type: "number",
-      width: 180,
+      width: 100,
       editable: true,
     },
     {
@@ -434,11 +462,12 @@ export default function MarketList() {
       },
     },
   ];
-  const obj = selectFunctionRows("A");
+
   const [valuesMarket, setValuesMarket] = React.useState<MarketCoinModel>({
-    marketCapitalization: obj.marketCapitalization,
-    totalSupply: obj.totalSupply,
+    marketCapitalization: 0,
+    totalSupply: 0,
   });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValuesMarket({
       ...valuesMarket,
@@ -449,21 +478,41 @@ export default function MarketList() {
 
   const SelectFunctionHandleChange = (event: SelectChangeEvent) => {
     setSelectFunction(event.target.value);
-    const obj = selectFunctionRows(event.target.value);
-    setValuesMarket({
-      marketCapitalization: obj.marketCapitalization,
-      totalSupply: obj.totalSupply,
+    selectFunctionRows(event.target.value).then((i) => {
+      setRows(i.data);
+      setValuesMarket({
+        marketCapitalization: i.marketCapitalization,
+        totalSupply: i.totalSupply,
+      });
+      updatePrice(
+        fixMMOBJ.Calculate(i.data, {
+          marketCapitalization: i.marketCapitalization,
+          totalSupply: i.totalSupply,
+        })
+      );
     });
-    setRows(obj.data);
   };
+
   useEffect(() => {
-    updatePrice(fixMMOBJ.Calculate(rows, valuesMarket));
-  }, [rows, valuesMarket]);
+    selectFunctionRows("A").then((i) => {
+      setRows(i.data);
+      setValuesMarket({
+        marketCapitalization: i.marketCapitalization,
+        totalSupply: i.totalSupply,
+      });
+      updatePrice(
+        fixMMOBJ.Calculate(i.data, {
+          marketCapitalization: i.marketCapitalization,
+          totalSupply: i.totalSupply,
+        })
+      );
+    });
+  }, []);
 
   return (
     <Box
       sx={{
-        height: 700,
+        height: 800,
         width: "100%",
         "& .actions": {
           color: "text.secondary",
