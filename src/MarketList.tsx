@@ -231,6 +231,9 @@ const selectFunctionRows = async (values: string) => {
 
   return data;
 };
+//coinmarketcap.com/currencies/bitcoin/#markets.
+//https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyMarketpairsLatest
+//https://pro-api.coinmarketcap.com/v2/cryptocurrency/market-pairs/latest
 const Coingecko = async (): Promise<any> => {
   const response: Response = await fetch(
     `https://api.coingecko.com/api/v3/coins/terrausd`
@@ -475,7 +478,7 @@ export default function MarketList() {
       [event.target.name]: event.target.value,
     });
   };
-  const [selectFunction, setSelectFunction] = React.useState("A");
+  const [selectFunction, setSelectFunction] = React.useState("");
 
   const SelectFunctionHandleChange = (event: SelectChangeEvent) => {
     setSelectFunction(event.target.value);
@@ -493,22 +496,9 @@ export default function MarketList() {
       );
     });
   };
-
   useEffect(() => {
-    selectFunctionRows("A").then((i) => {
-      setRows(i.data);
-      setValuesMarket({
-        marketCapitalization: i.marketCapitalization,
-        totalSupply: i.totalSupply,
-      });
-      updatePrice(
-        fixMMOBJ.Calculate(i.data, {
-          marketCapitalization: i.marketCapitalization,
-          totalSupply: i.totalSupply,
-        })
-      );
-    });
-  }, []);
+    updatePrice(fixMMOBJ.Calculate(rows, valuesMarket));
+  }, [rows, valuesMarket]);
 
   return (
     <Box
@@ -533,7 +523,7 @@ export default function MarketList() {
             id="pre-determined-values"
             value={selectFunction}
             onChange={SelectFunctionHandleChange}
-            label="Function A"
+            label="None"
           >
             <MenuItem value="">
               <em>None</em>
